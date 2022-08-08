@@ -1,14 +1,23 @@
 <?php
 
-$name = $_POST['name'];
-$phone = $_POST['phone'];
-$text = $_POST['text'];
-$token = "5315207825:AAHy7pYEqXSuD54MFSB6uqAmjhJbWhnJu2A";
-$chat_id = "-71884902";
+
+if (isset($_POST['form']))
+
+$name = $_POST['name'];// это что ловим с формы 
+$phone = $_POST['phone']; // это что ловим с формы
+$email = $_POST['text']; // это что ловим с формы
+// Можно приписывать так если ловить не надо 
+// $zakaz = "Заказ с сайты XXX";
+
+$token = "5315207825:AAHy7pYEqXSuD54MFSB6uqAmjhJbWhnJu2A"; // Это ТОКЕН
+$chat_id = "-718849026"; // Это ИД группы
+
 $arr = array(
-  'Имя: ' => $name,
+
+// 'Заказ с сайты: ' => $zakaz,
   'Телефон: ' => $phone,
-  'Сообщение:' => $text
+  'Имя: ' => $name,
+  'Сообщение' => $text
 );
 
 foreach($arr as $key => $value) {
@@ -17,9 +26,11 @@ foreach($arr as $key => $value) {
 
 $sendToTelegram = fopen("https://api.telegram.org/bot{$token}/sendMessage?chat_id={$chat_id}&parse_mode=html&text={$txt}","r");
 
+// Это условие Если отправлено редирект если нет  ошибка Можно убрать!
 if ($sendToTelegram) {
-  modal('Location: index.html');
+  header('Location: index.html');
 } else {
   echo "Error";
 }
+
 ?>
