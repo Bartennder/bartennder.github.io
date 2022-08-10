@@ -34,3 +34,23 @@ closeElem.addEventListener('click', () => {
 overlay.addEventListener('click', () => {
     menu.classList.remove('active');
 });
+
+const TOKEN = '5315207825:AAHy7pYEqXSuD54MFSB6uqAmjhJbWhnJu2A';
+const CHAT_ID = '-718849026';
+const URL_API = 'https://api.telegram.org/bot$( TOKEN )/sendMessage';
+const success = document.getElementById('thanks');
+document.getElementById('tg').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    let message = '<b>Заявка с сайта</b>\n';
+    message += '<b>Отправитель: </b> ${ this.name.value }\n';
+    message += '<b>Номер телефона: </b> ${ this.nomber.value }\n';
+    message += '<b>Сообщение</b> ${ this.text.value }';
+    
+    axios.post(URL_API, {
+        chat_id: CHAT_ID,
+        parse_mode: 'html',
+        text: message
+    });
+
+});
