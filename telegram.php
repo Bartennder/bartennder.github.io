@@ -1,36 +1,43 @@
 <?php
 
 
-if (isset($_POST['form']))
+//В переменную $token нужно вставить токен, который нам прислал @botFather
+$token = "5315207825:AAHy7pYEqXSuD54MFSB6uqAmjhJbWhnJu2A";
 
-$name = $_POST['name'];// это что ловим с формы 
-$phone = $_POST['phone']; // это что ловим с формы
-$email = $_POST['text']; // это что ловим с формы
-// Можно приписывать так если ловить не надо 
-// $zakaz = "Заказ с сайты XXX";
+//Сюда вставляем chat_id
+$chat_id = "-718849026";
 
-$token = "5315207825:AAHy7pYEqXSuD54MFSB6uqAmjhJbWhnJu2A"; // Это ТОКЕН
-$chat_id = "-718849026"; // Это ИД группы
+//Определяем переменные для передачи данных из нашей формы
+if ($_post['act'] == 'order') {
+    $name = ($_post['name']);
+    $phone = ($_post['phone']);
+    $text = ($_post['text']);
 
-$arr = array(
+//Собираем в массив то, что будет передаваться боту
+    $arr = array(
+        'Имя:' => $name,
+        'Телефон:' => $phone,
+        'Сообщение' => $text
+    );
 
-// 'Заказ с сайты: ' => $zakaz,
-  'Телефон: ' => $phone,
-  'Имя: ' => $name,
-  'Сообщение' => $text
-);
+//Настраиваем внешний вид сообщения в телеграме
+    foreach($arr as $key => $value) {
+        $txt .= "<b>".$key."</b> ".$value."%0A";
+    };
 
-foreach($arr as $key => $value) {
-  $txt .= "<b>".$key."</b> ".$value."%0A";
-};
+//Передаем данные боту
+    $sendToTelegram = fopen("https://api.telegram.org/bot{$token}/sendMessage?chat_id={$chat_id}&parse_mode=html&text={$txt}");
 
-$sendToTelegram = fopen("https://api.telegram.org/bot{$token}/sendMessage?chat_id={$chat_id}&parse_mode=html&text={$txt}","r");
+//Выводим сообщение об успешной отправке
+    if ($sendToTelegram) {
+        alert('Спасибо! Ваша заявка принята. Мы свяжемся с вами в ближайшее время.');
+    }
 
-// Это условие Если отправлено редирект если нет  ошибка Можно убрать!
-if ($sendToTelegram) {
-  header('Location: index.html');
-} else {
-  echo "Error";
+//А здесь сообщение об ошибке при отправке
+    else {
+        alert('Что-то пошло не так. ПОпробуйте отправить форму ещё раз.');
+    }
 }
+
 
 ?>
