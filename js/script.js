@@ -50,6 +50,19 @@ document.getElementById('tg').addEventListener('submit', function(e) {
     axios.post(URL_API, {
         chat_id: CHAT_ID,
         text: message
-    });
+    })
+    .then((res) => {
+        this.name.value = "";
+        this.phone.value = "";
+        this.text.value = "";
+        success.innerHTML = "block";
+        success.style.display = "block";
+    })
+    .catch((err) => {
+        console.warn(err);
+    })
+    .finaly(() => {
+        console.log('конец');
+    })
 
 });
