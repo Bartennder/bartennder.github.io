@@ -49,7 +49,6 @@ document.getElementById('tg').addEventListener('submit', function(e) {
     
     axios.post(URL_API, {
         chat_id: CHAT_ID,
-        parse_mode: 'html',
         text: message
     });
 
