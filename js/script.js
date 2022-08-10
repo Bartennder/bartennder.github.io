@@ -44,7 +44,7 @@ document.getElementById('tg').addEventListener('submit', function(e) {
 
     let message = '<b>Заявка с сайта</b>\n';
     message += '<b>Отправитель: </b> ${ this.name.value }\n';
-    message += '<b>Номер телефона: </b> ${ this.nomber.value }\n';
+    message += '<b>Номер телефона: </b> ${ this.phone.value }\n';
     message += '<b>Сообщение</b> ${ this.text.value }';
     
     axios.post(URL_API, {
